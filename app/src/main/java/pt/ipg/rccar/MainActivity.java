@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         meuSocket.close();
                         conexao = false;
+                        btnConexao.setText("Conectar");
                         Toast.makeText(getApplicationContext(), "Bluetooh desconectado", Toast.LENGTH_LONG).show();
 
                     }catch (IOException erro){
@@ -100,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
                         conexao = true;
 
-                        Toast.makeText(getApplicationContext(), "Conectado com: : " + MAC, Toast.LENGTH_LONG).show();
+                        btnConexao.setText("Desconectar");
+
+                        Toast.makeText(getApplicationContext(), "Conectado com: " + MAC, Toast.LENGTH_LONG).show();
                     }catch (IOException erro){
                         conexao = false;
 
