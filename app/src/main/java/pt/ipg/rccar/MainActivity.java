@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,7 +15,11 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnConexao, btnLed1;
     private static final int SOLICITA_ATIVACAO = 1;
+    private static final int SOLICITA_CONEXAO = 2;
     BluetoothAdapter meuBluetoothAdapter = null;
+
+    boolean conexao = false;
+    private static String MAC = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,29 @@ public class MainActivity extends AppCompatActivity {
         meuBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if(meuBluetoothAdapter == null){
-            Toast.makeText(getApplicationContext(), "Este disposivo não possui bluetooth", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Este disposivo não possui bluetooth", Toast.LENGTH_SHORT).show();
         }else if(!meuBluetoothAdapter.isEnabled()) {
             Intent ativaBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(ativaBluetooth, SOLICITA_ATIVACAO);
         }
+
+        btnConexao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(conexao){
+                    //desconectar
+
+                }else{
+                    //conectar
+                    Intent abreLista = new Intent(MainActivity.this, ListaDispositivos.class);
+                    startActivityForResult(abreLista, SOLICITA_CONEXAO);
+                }
+            }
+        });
     }
+
+    
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -48,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                 }
                 break;
+
+            case SOLICITA_CONEXAO:
+                if(resultCode == Activity.RESULT_OK){
+                    MAC = data.getExtras().getString(ListaDispositivos.ENDERECO_MAC);
+                    Toast.makeText(getApplicationContext(), "MAC FINAL: " + MAC, Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Falha ao obter o MAC", Toast.LENGTH_LONG).show();
+                }
         }
 
     }
