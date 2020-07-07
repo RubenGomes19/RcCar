@@ -22,6 +22,8 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     Button btnConexao, btnLed1;
+
+
     private static final int SOLICITA_ATIVACAO = 1;
     private static final int SOLICITA_CONEXAO = 2;
 
@@ -36,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
+
+
+    public void atividadeModoAutonomo(View view) {
+
+        Intent intent = new Intent(this, ModoAutonomo.class);
+
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnConexao = (Button) findViewById(R.id.btnConexao);
         btnLed1 = (Button) findViewById(R.id.btnLed1);
+
+
 
         meuBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -78,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         btnLed1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 if(conexao){
                     connectedThread.enviar("l");
                 }else{
-                    Toast.makeText(getApplicationContext(), "Bluetooth nao esta conectado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Bluetooth não esta conectado", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -209,5 +224,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 }

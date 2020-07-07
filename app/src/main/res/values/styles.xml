@@ -5,6 +5,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+        <!-- <item name="colorPrimary">#C1FF6F22</item>
+        <item name="colorPrimaryDark">#7F7E80</item>
+        <item name="colorAccent">#777C7C</item>
+-->
     </style>
 
 </resources>
