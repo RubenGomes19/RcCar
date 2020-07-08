@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ModosNavegacao"></activity>
+        <activity android:name=".ModoManual"></activity>
+        <activity android:name=".ModosNavegacao" />
         <activity android:name=".ModoAutonomo" />
         <activity android:name=".MainActivity">
             <intent-filter>
