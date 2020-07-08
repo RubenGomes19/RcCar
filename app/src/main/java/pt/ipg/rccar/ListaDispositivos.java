@@ -22,6 +22,7 @@ public class ListaDispositivos extends ListActivity {
     static String ENDERECO_MAC = null;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class ListaDispositivos extends ListActivity {
 
         String informacaoGeral = ((TextView) v).getText().toString();
 
-        //Toast.makeText(getApplicationContext(), "Info: " + informacaoGeral, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Info: " + informacaoGeral, Toast.LENGTH_LONG).show();
 
         String enderecoMac = informacaoGeral.substring(informacaoGeral.length() - 17);
         //Toast.makeText(getApplicationContext(), "mac: " + enderecoMac, Toast.LENGTH_SHORT).show();
@@ -57,7 +58,13 @@ public class ListaDispositivos extends ListActivity {
         Intent retornaMac = new Intent();
         retornaMac.putExtra(ENDERECO_MAC, enderecoMac);
         setResult(RESULT_OK, retornaMac);
+
         finish();
+
+        /*Intent nomeBt = new Intent();
+        nomeBt.putExtra(NOME_BT, informacaoGeral);
+        setResult(RESULT_OK);
+        finish();*/
 
     }
 }

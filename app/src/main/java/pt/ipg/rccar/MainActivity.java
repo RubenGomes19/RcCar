@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     static boolean conexao = false;
     private static String MAC = null;
+
 
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
@@ -79,10 +81,12 @@ public class MainActivity extends AppCompatActivity {
                         meuSocket.close();
                         conexao = false;
                         btnConexao.setText("Conectar");
+                        btnConexao.setBackgroundColor(Color.parseColor("#ED3F60B5"));
                         Toast.makeText(getApplicationContext(), "Bluetooh desconectado", Toast.LENGTH_LONG).show();
 
                     }catch (IOException erro){
                         Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
+
                     }
 
                 }else{
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         if(conexao){
                             connectedThread.enviar("l");
                         }else{
-                            Toast.makeText(getApplicationContext(), "Bluetooth não esta conectado", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Bluetooth não está conectado", Toast.LENGTH_LONG).show();
                         }
             }
         });
@@ -113,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
 
             case SOLICITA_ATIVACAO:
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
             case SOLICITA_CONEXAO:
                 if(resultCode == Activity.RESULT_OK){
                     MAC = data.getExtras().getString(ListaDispositivos.ENDERECO_MAC);
+
                     //Toast.makeText(getApplicationContext(), "MAC FINAL: " + MAC, Toast.LENGTH_LONG).show();
                     meuDevice = meuBluetoothAdapter.getRemoteDevice(MAC);
                     try {
@@ -140,13 +145,15 @@ public class MainActivity extends AppCompatActivity {
                         connectedThread = new ConnectedThread(meuSocket);
                         connectedThread.start();
 
-                        btnConexao.setText("Desconectar");
+                        btnConexao.setText("Desconectar '" + MAC + "'");
+                        btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
 
-                        Toast.makeText(getApplicationContext(), "Conectado com: " + MAC, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Conectado com: " + MAC , Toast.LENGTH_LONG).show();
                     }catch (IOException erro){
                         conexao = false;
 
-                        Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Ocorreu um erro a conectar, tente novamente!", Toast.LENGTH_SHORT).show();
                     }
 
                 }else{
