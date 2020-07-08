@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private static final int SOLICITA_ATIVACAO = 1;
     private static final int SOLICITA_CONEXAO = 2;
 
-    ConnectedThread connectedThread;
+    static ConnectedThread connectedThread;
 
     BluetoothAdapter meuBluetoothAdapter = null;
     BluetoothDevice meuDevice = null;
     BluetoothSocket meuSocket = null;
 
-    boolean conexao = false;
+    static boolean conexao = false;
     private static String MAC = null;
 
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ModoAutonomo.class);
 
         startActivity(intent);
+
     }
 
     @Override
@@ -94,14 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnLed1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    @Override
+                    public void onClick(View view) {
 
-                if(conexao){
-                    connectedThread.enviar("l");
-                }else{
-                    Toast.makeText(getApplicationContext(), "Bluetooth não esta conectado", Toast.LENGTH_LONG).show();
-                }
+                        if(conexao){
+                            connectedThread.enviar("l");
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Bluetooth não esta conectado", Toast.LENGTH_LONG).show();
+                        }
             }
         });
 
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class ConnectedThread extends Thread {
+    class ConnectedThread extends Thread {
 
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
