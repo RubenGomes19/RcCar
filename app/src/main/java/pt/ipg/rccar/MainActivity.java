@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void atividadeModoAutonomo(View view) {
+    public void atividadeModos(View view) {
 
-        Intent intent = new Intent(this, ModoAutonomo.class);
+        Intent intent = new Intent(this, ModosNavegacao.class);
 
         startActivity(intent);
 
