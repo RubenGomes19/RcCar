@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     //conectar
                     Intent abreLista = new Intent(MainActivity.this, ListaDispositivos.class);
                     startActivityForResult(abreLista, SOLICITA_CONEXAO);
+
                 }
             }
         });
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(getApplicationContext(), "Bluetooth não está conectado", Toast.LENGTH_LONG).show();
                         }
+
+
+
             }
         });
 
@@ -131,11 +136,15 @@ public class MainActivity extends AppCompatActivity {
 
             case SOLICITA_CONEXAO:
                 if(resultCode == Activity.RESULT_OK){
+
                     MAC = data.getExtras().getString(ListaDispositivos.ENDERECO_MAC);
 
                     //Toast.makeText(getApplicationContext(), "MAC FINAL: " + MAC, Toast.LENGTH_LONG).show();
                     meuDevice = meuBluetoothAdapter.getRemoteDevice(MAC);
+
+
                     try {
+
                         meuSocket = meuDevice.createRfcommSocketToServiceRecord(MEU_UUID);
 
                         meuSocket.connect();
@@ -147,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
                         btnConexao.setText("Desconectar '" + MAC + "'");
                         btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
+
 
                         //Toast.makeText(getApplicationContext(), "Conectado com: " + MAC , Toast.LENGTH_LONG).show();
                     }catch (IOException erro){

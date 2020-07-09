@@ -1,6 +1,7 @@
 package pt.ipg.rccar;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -42,6 +43,7 @@ public class ListaDispositivos extends ListActivity {
             }
         }
         setListAdapter(ArrayBluetooth);
+
     }
 
     @Override
@@ -60,6 +62,7 @@ public class ListaDispositivos extends ListActivity {
         setResult(RESULT_OK, retornaMac);
 
         finish();
+
 
         /*Intent nomeBt = new Intent();
         nomeBt.putExtra(NOME_BT, informacaoGeral);
