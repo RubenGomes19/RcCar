@@ -27,9 +27,9 @@ public class ModoAutonomo extends AppCompatActivity {
     Button btnLed2, buttonPress;
     TextView textViewTexto;
     private int colorFlag = 0;
-    private boolean clicando = true;
+    //private boolean clicando = true;
 
-    private static final int ID_TEXTO_PARA_VOZ = 100;
+    //private static final int ID_TEXTO_PARA_VOZ = 100;
 
 
 
@@ -49,7 +49,7 @@ public class ModoAutonomo extends AppCompatActivity {
 
         btnLed2 = (Button) findViewById(R.id.btnLed2);
         buttonPress = (Button) findViewById(R.id.buttonPress);
-        textViewTexto = (TextView) findViewById(R.id.textViewTexto);
+        //textViewTexto = (TextView) findViewById(R.id.textViewTexto);
 
 
         btnLed2.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class ModoAutonomo extends AppCompatActivity {
 
         });
 
-
+      /*
        buttonPress.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -96,6 +96,8 @@ public class ModoAutonomo extends AppCompatActivity {
                }
             }
        });
+
+       */
 
 
 
@@ -164,7 +166,7 @@ public class ModoAutonomo extends AppCompatActivity {
 */
 
     }
-
+/*
     @Override
     protected void onActivityResult(int id, int resultCodeID, Intent dados) {
         super.onActivityResult(id, resultCodeID, dados);
@@ -191,7 +193,10 @@ public class ModoAutonomo extends AppCompatActivity {
                 break;
         }
 
+
     }
+
+ */
 
 
 }

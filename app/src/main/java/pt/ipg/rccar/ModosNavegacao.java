@@ -29,4 +29,12 @@ public class ModosNavegacao extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void atividadeModoVoz(View view) {
+
+        Intent intent = new Intent(this, ModoVoz.class);
+
+        startActivity(intent);
+
+    }
 }
