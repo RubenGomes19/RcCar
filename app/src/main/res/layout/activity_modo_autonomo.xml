@@ -6,35 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ModoAutonomo">
 
-    <Button
-        android:id="@+id/btnLed2"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="#4CAF50"
-        android:text="Ligar Led"
+        android:text="MODO AUTONOMO"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="331dp"
-        android:layout_height="353dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+    <Button
+        android:id="@+id/btnLed2"
+        android:layout_width="309dp"
+        android:layout_height="296dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/start"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/buttonPress"
@@ -42,12 +46,36 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
         android:text="Pressiona"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonChange"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="274dp"
+        android:layout_marginLeft="274dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/change"
+        android:onClick="atividadeModos"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLed2" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonChange2"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:drawable/ic_menu_manage"
+        android:onClick="atividadeModos"
+        app:layout_constraintStart_toEndOf="@+id/buttonChange"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,17 @@ public class ModoAutonomo extends AppCompatActivity {
     private int colorFlag = 0;
     private boolean clicando = true;
 
+
+
+    public void atividadeModos(View view) {
+
+        Intent intent = new Intent(this, ModosNavegacao.class);
+
+        startActivity(intent);
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +50,16 @@ public class ModoAutonomo extends AppCompatActivity {
                 if (MainActivity.conexao && colorFlag == 0) {
                     MainActivity.connectedThread.enviar("l");
                     Toast.makeText(getApplicationContext(), "Led ligado", Toast.LENGTH_SHORT).show();
-                    btnLed2.setText("Desligar Led");
-                    btnLed2.setBackgroundColor(Color.parseColor("#B62E2E"));
+                    btnLed2.setBackgroundResource(R.drawable.stop);
+                    //btnLed2.setText("Desligar Led");
+                    //btnLed2.setBackgroundColor(Color.parseColor("#B62E2E"));
                     colorFlag = 1;
                 } else if (MainActivity.conexao && colorFlag == 1) {
                     MainActivity.connectedThread.enviar("l");
                     Toast.makeText(getApplicationContext(), "Led desligado", Toast.LENGTH_SHORT).show();
-                    btnLed2.setText("Ligar Led");
-                    //btnLed2.setBackgroundColor( );
-                    btnLed2.setBackgroundColor(Color.parseColor("#4CAF50"));
+                    btnLed2.setBackgroundResource(R.drawable.start);
+                    //btnLed2.setText("Ligar Led");
+                    //btnLed2.setBackgroundColor(Color.parseColor("#4CAF50"));
                     colorFlag = 0;
                 } else {
                     Toast.makeText(getApplicationContext(), "Bluetooth não esta conectado", Toast.LENGTH_LONG).show();
