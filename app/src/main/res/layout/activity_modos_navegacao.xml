@@ -61,6 +61,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="#353333"
+        android:onClick="atividadeModoManual"
         android:text="MODO MANUAL"
         android:textColor="#FFFFFF"
         android:textStyle="bold"

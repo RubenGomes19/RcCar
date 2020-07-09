@@ -21,4 +21,12 @@ public class ModosNavegacao extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    public void atividadeModoManual(View view) {
+
+        Intent intent = new Intent(this, ModoManual.class);
+
+        startActivity(intent);
+
+    }
 }
