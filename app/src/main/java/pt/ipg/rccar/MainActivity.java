@@ -2,6 +2,7 @@ package pt.ipg.rccar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnConexao;
     ConstraintLayout layout;
+    private Toolbar toolbar;
 
 
     private static final int SOLICITA_ATIVACAO = 1;
@@ -49,8 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
-
+    //ISTO É PARA APAGAR! A DE BAIXO E QUE ESTA BEM, E SO TESTE
     public void atividadeModos(View view) {
+        Intent intent = new Intent(this, ModosNavegacao.class);
+
+        startActivity(intent);
+    }
+
+
+    public void atividadeModo(View view) {
 
         if(conexao){
             Intent intent = new Intent(this, ModosNavegacao.class);
@@ -62,13 +72,13 @@ public class MainActivity extends AppCompatActivity {
             adb.setTitle("Title");
 
             adb.setPositiveButton("Ok", null);
-            adb.show();
+            adb.show();*/
 
-             */
 
-            Snackbar snackbar = Snackbar.make(layout, "Estabeleça uma conexão primeiro", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            /*Snackbar snackbar = Snackbar.make(layout, "Estabeleça uma conexão primeiro", Snackbar.LENGTH_LONG);
+            snackbar.show();*/
         }
+
 
 
     }
@@ -78,11 +88,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.myToolBar);
+
+
+
+        setSupportActionBar(toolbar);
+
         //Toast.makeText(getApplicationContext(), "Pagina inicial: Bluetooth", Toast.LENGTH_SHORT).show();
 
         btnConexao = (Button) findViewById(R.id.btnConexao);
         //btnLed1 = (Button) findViewById(R.id.btnLed1);
         layout = (ConstraintLayout) findViewById(R.id.main);
+
 
 
         meuBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -142,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
          */
 
     }
+
 
 
     @Override
