@@ -76,7 +76,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="131dp"
-        android:background="@drawable/x"
+        android:background="@drawable/quadrado"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
 

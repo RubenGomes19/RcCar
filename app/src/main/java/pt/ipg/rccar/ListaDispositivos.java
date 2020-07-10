@@ -61,6 +61,7 @@ public class ListaDispositivos extends ListActivity {
         retornaMac.putExtra(ENDERECO_MAC, enderecoMac);
         setResult(RESULT_OK, retornaMac);
 
+
         finish();
 
 

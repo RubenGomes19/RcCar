@@ -2,8 +2,12 @@ package pt.ipg.rccar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Constraints;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -17,6 +21,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -24,7 +30,8 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnConexao, btnLed1;
+    Button btnConexao;
+    ConstraintLayout layout;
 
 
     private static final int SOLICITA_ATIVACAO = 1;
@@ -43,14 +50,29 @@ public class MainActivity extends AppCompatActivity {
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
 
-
     public void atividadeModos(View view) {
 
-        Intent intent = new Intent(this, ModosNavegacao.class);
+        if(conexao){
+            Intent intent = new Intent(this, ModosNavegacao.class);
 
-        startActivity(intent);
+            startActivity(intent);
+        }else{
+            //Toast.makeText(getApplicationContext(), "Estabeleça uma conexão primeiro!", Toast.LENGTH_SHORT).show();
+            /*AlertDialog.Builder adb=new AlertDialog.Builder(MainActivity.this);
+            adb.setTitle("Title");
+
+            adb.setPositiveButton("Ok", null);
+            adb.show();
+
+             */
+
+            Snackbar snackbar = Snackbar.make(layout, "Estabeleça uma conexão primeiro", Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +81,12 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), "Pagina inicial: Bluetooth", Toast.LENGTH_SHORT).show();
 
         btnConexao = (Button) findViewById(R.id.btnConexao);
-        btnLed1 = (Button) findViewById(R.id.btnLed1);
-
+        //btnLed1 = (Button) findViewById(R.id.btnLed1);
+        layout = (ConstraintLayout) findViewById(R.id.main);
 
 
         meuBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
 
         if(meuBluetoothAdapter == null){
             Toast.makeText(getApplicationContext(), "Este disposivo não possui bluetooth", Toast.LENGTH_SHORT).show();
@@ -101,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        btnLed1.setOnClickListener(new View.OnClickListener() {
+        /*btnLed1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -116,12 +139,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+         */
+
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         switch (requestCode) {
 
             case SOLICITA_ATIVACAO:
@@ -142,6 +169,31 @@ public class MainActivity extends AppCompatActivity {
                     meuDevice = meuBluetoothAdapter.getRemoteDevice(MAC);
 
 
+
+                    /*
+                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                        progressDialog.setTitle("A Conectar...");
+                        progressDialog.setMessage("Aguarde por favor...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(5000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                progressDialog.dismiss();
+                            }
+                        }).start();
+                        progressDialog.show();
+
+
+                     */
+
                     try {
 
                         meuSocket = meuDevice.createRfcommSocketToServiceRecord(MEU_UUID);
@@ -156,13 +208,16 @@ public class MainActivity extends AppCompatActivity {
                         btnConexao.setText("Desconectar '" + MAC + "'");
                         btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
 
+                        //progressDialog.dismiss();
 
                         //Toast.makeText(getApplicationContext(), "Conectado com: " + MAC , Toast.LENGTH_LONG).show();
                     }catch (IOException erro){
                         conexao = false;
 
                         //Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(), "Ocorreu um erro a conectar, tente novamente!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Ocorreu um erro a conectar, tente novamente!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(layout, "Ocorreu um erro a conectar, tente novamente", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
 
                 }else{
