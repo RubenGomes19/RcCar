@@ -18,8 +18,19 @@ public class ModoVoz extends AppCompatActivity {
 
     Button buttonVoz;
     TextView textViewTextoEnviado;
+    private int controla = 0;
 
     private static final int ID_TEXTO_PARA_VOZ = 100;
+
+
+
+    public void atividadeModos(View view) {
+
+        Intent intent = new Intent(this, ModosNavegacao.class);
+
+        startActivity(intent);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +72,26 @@ public class ModoVoz extends AppCompatActivity {
 
                     String texto = result.get(0);
 
-                    Toast.makeText(getApplicationContext(), "Fala: " + texto, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Fala: " + texto, Toast.LENGTH_LONG).show();
 
-                    textViewTextoEnviado.setText(texto);
+                    textViewTextoEnviado.setText("Clique no botão e fale \"INICIAR\" para iniciar ou \"PARAR\" para parar." + "/n" + "Fala recolhida: " + texto);
 
-                    String start = "start";
+                    String start = "iniciar";
+                    String stop = "parar";
 
-                    if (texto.equals(start)) {
+                    if (texto.equals(start) && MainActivity.conexao && controla == 0) {
                         MainActivity.connectedThread.enviar("l");
-                        Toast.makeText(getApplicationContext(), "Sao iguais: " + texto + " = " + start, Toast.LENGTH_LONG).show();
+                        controla = 1;
+                        //Toast.makeText(getApplicationContext(), "Sao iguais: " + texto + " = " + start, Toast.LENGTH_LONG).show();
+                    }else if(texto.equals(stop) && MainActivity.conexao && controla == 1){
+                        MainActivity.connectedThread.enviar("l");
+                        controla = 0;
+
+                    }else if(texto != start && MainActivity.conexao){
+                        Toast.makeText(getApplicationContext(), "" + texto + " não tem nenhum comando associado!", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Não está conectado" , Toast.LENGTH_LONG).show();
                     }
 
                 }
