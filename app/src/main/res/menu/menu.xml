@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/delete"
+        android:id="@+id/definicoes"
         android:icon="@drawable/definicoes"
         android:title="Definicoes"
         app:showAsAction="ifRoom" />

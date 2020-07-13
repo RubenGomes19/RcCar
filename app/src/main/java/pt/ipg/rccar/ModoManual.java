@@ -1,11 +1,15 @@
 package pt.ipg.rccar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +17,8 @@ import android.widget.Toast;
 
 public class ModoManual extends AppCompatActivity {
     Button buttonX;
+
+    private int menuAtual = R.menu.modos;
 
     public void atividadeModos(View view) {
 
@@ -28,6 +34,9 @@ public class ModoManual extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_manual);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+
+        Toolbar toolbar = findViewById(R.id.myToolBar);
+        setSupportActionBar(toolbar);
 
         buttonX = (Button) findViewById(R.id.buttonX);
 
@@ -83,5 +92,34 @@ public class ModoManual extends AppCompatActivity {
 
 
          */
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(menuAtual, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.definicoes) {
+            AlertDialog.Builder adb=new AlertDialog.Builder(ModoManual.this);
+            adb.setTitle("Definições");
+            adb.setMessage("Modo Manual \n" + "Desenvolvido por Rúben Gomes");
+
+            adb.setPositiveButton("Ok", null);
+            adb.show();
+        }else if(id == R.id.inicio){
+            Intent intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);
+        }else if(id == R.id.mudar){
+            Intent intent = new Intent(this, ModosNavegacao.class);
+
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,7 +1,9 @@
 package pt.ipg.rccar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothSocket;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +35,8 @@ public class ModoAutonomo extends AppCompatActivity {
 
     //private static final int ID_TEXTO_PARA_VOZ = 100;
 
+    private int menuAtual = R.menu.modos;
+
 
 
     public void atividadeModos(View view) {
@@ -47,8 +53,11 @@ public class ModoAutonomo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_autonomo);
 
+        Toolbar toolbar = findViewById(R.id.myToolBar);
+        setSupportActionBar(toolbar);
+
         btnLed2 = (Button) findViewById(R.id.btnLed2);
-        buttonPress = (Button) findViewById(R.id.buttonPress);
+        //buttonPress = (Button) findViewById(R.id.buttonPress);
         //textViewTexto = (TextView) findViewById(R.id.textViewTexto);
 
 
@@ -76,6 +85,9 @@ public class ModoAutonomo extends AppCompatActivity {
             }
 
         });
+
+
+
 
       /*
        buttonPress.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +178,37 @@ public class ModoAutonomo extends AppCompatActivity {
 */
 
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(menuAtual, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.definicoes) {
+            AlertDialog.Builder adb=new AlertDialog.Builder(ModoAutonomo.this);
+            adb.setTitle("Definições");
+            adb.setMessage("Modo Autonomo \n" + "Desenvolvido por Rúben Gomes");
+
+            adb.setPositiveButton("Ok", null);
+            adb.show();
+        }else if(id == R.id.inicio){
+            Intent intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);
+        }else if(id == R.id.mudar){
+            Intent intent = new Intent(this, ModosNavegacao.class);
+
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 /*
     @Override
     protected void onActivityResult(int id, int resultCodeID, Intent dados) {
