@@ -2,7 +2,6 @@ package pt.ipg.rccar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Constraints;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -18,9 +17,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 
 import com.google.android.material.snackbar.Snackbar;
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnConexao;
     ConstraintLayout layout;
-    private Toolbar toolbar;
 
 
     private static final int SOLICITA_ATIVACAO = 1;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     static boolean conexao = false;
     private static String MAC = null;
+
+    private int menuAtual = R.menu.menu;
 
 
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -88,11 +92,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.myToolBar);
-
-
+        Toolbar toolbar = findViewById(R.id.myToolBar);
 
         setSupportActionBar(toolbar);
+
+
+        //getSupportActionBar().setIcon(R.drawable.definicoes);
+
+
+
+
 
         //Toast.makeText(getApplicationContext(), "Pagina inicial: Bluetooth", Toast.LENGTH_SHORT).show();
 
@@ -161,6 +170,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(menuAtual, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.delete) {
+             AlertDialog.Builder adb=new AlertDialog.Builder(MainActivity.this);
+            adb.setTitle("Definições");
+            adb.setMessage("Estabeleça uma conexão primeiro \n" + "Desenvolvido por Rúben Gomes");
+
+            adb.setPositiveButton("Ok", null);
+            adb.show();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

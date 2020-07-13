@@ -17,6 +17,7 @@
         <activity android:name=".ModosNavegacao" />
         <activity android:name=".ModoAutonomo" />
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
