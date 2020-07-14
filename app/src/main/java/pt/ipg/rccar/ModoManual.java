@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class ModoManual extends AppCompatActivity {
-    Button buttonX,buttonEsquerda, buttonDireita;
+    Button buttonX, buttonBola, buttonQuadrado, buttonTriangulo, buttonEsquerda, buttonDireita;
 
     private int menuAtual = R.menu.modos;
 
@@ -39,6 +39,9 @@ public class ModoManual extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         buttonX = (Button) findViewById(R.id.buttonX);
+        buttonBola = (Button) findViewById(R.id.buttonBola);
+        buttonQuadrado = (Button) findViewById(R.id.buttonQuadrado);
+        buttonTriangulo = (Button) findViewById(R.id.buttonTriangulo);
         buttonDireita = (Button) findViewById(R.id.buttonDireita);
         buttonEsquerda = (Button) findViewById(R.id.buttonEsquerda);
 
@@ -60,6 +63,87 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("f");
+                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        buttonTriangulo.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if(MainActivity.conexao){
+
+                        MainActivity.connectedThread.enviar("t");
+                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(MainActivity.conexao ){
+                        MainActivity.connectedThread.enviar("t");
+                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        buttonQuadrado.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if(MainActivity.conexao){
+
+                        MainActivity.connectedThread.enviar("p");
+                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(MainActivity.conexao ){
+                        MainActivity.connectedThread.enviar("p");
+                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+        buttonBola.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if(MainActivity.conexao){
+
+                        MainActivity.connectedThread.enviar("s");
+                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(MainActivity.conexao ){
+                        MainActivity.connectedThread.enviar("s");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
 
 
