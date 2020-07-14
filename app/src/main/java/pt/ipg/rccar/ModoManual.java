@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class ModoManual extends AppCompatActivity {
-    Button buttonX;
+    Button buttonX,buttonEsquerda, buttonDireita;
 
     private int menuAtual = R.menu.modos;
 
@@ -39,6 +39,8 @@ public class ModoManual extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         buttonX = (Button) findViewById(R.id.buttonX);
+        buttonDireita = (Button) findViewById(R.id.buttonDireita);
+        buttonEsquerda = (Button) findViewById(R.id.buttonEsquerda);
 
 
         buttonX.setOnTouchListener(new View.OnTouchListener() {
@@ -49,7 +51,7 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
                     if(MainActivity.conexao){
 
-                        MainActivity.connectedThread.enviar("l");
+                        MainActivity.connectedThread.enviar("f");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
 
                     }
@@ -57,7 +59,7 @@ public class ModoManual extends AppCompatActivity {
 
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
-                        MainActivity.connectedThread.enviar("l");
+                        MainActivity.connectedThread.enviar("f");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
 
 
@@ -68,6 +70,61 @@ public class ModoManual extends AppCompatActivity {
             }
         });
 
+
+        buttonEsquerda.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if(MainActivity.conexao){
+
+                        MainActivity.connectedThread.enviar("e");
+                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(MainActivity.conexao ){
+                        MainActivity.connectedThread.enviar("e");
+                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }
+
+                return false;
+            }
+        });
+
+
+        buttonDireita.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if(MainActivity.conexao){
+
+                        MainActivity.connectedThread.enviar("d");
+                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(MainActivity.conexao ){
+                        MainActivity.connectedThread.enviar("d");
+                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }
+
+                return false;
+            }
+        });
 
         /*
         //GUARDAR PROGRESS BAR

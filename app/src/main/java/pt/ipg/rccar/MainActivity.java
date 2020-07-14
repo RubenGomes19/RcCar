@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,6 +30,7 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     Button btnConexao;
+    ImageView bt;
     ConstraintLayout layout;
 
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int menuAtual = R.menu.menu;
 
+    int estado_conexao = 0;
+
 
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
@@ -54,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ModosNavegacao.class);
 
         startActivity(intent);
+        /*Intent it = new Intent(MainActivity.this, ModosNavegacao.class);
+        it.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(it);
+
+         */
     }
 
 
@@ -90,17 +99,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        //getSupportActionBar().setIcon(R.drawable.definicoes);
-
-
-
-
-
         //Toast.makeText(getApplicationContext(), "Pagina inicial: Bluetooth", Toast.LENGTH_SHORT).show();
 
         btnConexao = (Button) findViewById(R.id.btnConexao);
         //btnLed1 = (Button) findViewById(R.id.btnLed1);
         layout = (ConstraintLayout) findViewById(R.id.main);
+        bt = (ImageView) findViewById(R.id.imageViewBt);
 
 
 
@@ -123,9 +127,17 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         meuSocket.close();
                         conexao = false;
-                        btnConexao.setText("Conectar");
-                        btnConexao.setBackgroundColor(Color.parseColor("#ED3F60B5"));
-                        Toast.makeText(getApplicationContext(), "Bluetooh desconectado", Toast.LENGTH_LONG).show();
+                        estado_conexao = 0;
+
+                        if(estado_conexao == 0) {
+                            btnConexao.setText("Conectar");
+                            btnConexao.setBackgroundColor(Color.parseColor("#ED3F60B5"));
+                            //Toast.makeText(getApplicationContext(), "Bluetooh desconectado", Toast.LENGTH_LONG).show();
+                            bt.setBackgroundColor(Color.parseColor("#ED3F60B5"));
+                            bt.setImageResource(R.drawable.ic_baseline_bluetooth_24);
+                            Snackbar snackbar = Snackbar.make(layout, "HC-06 desconectado", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
 
                     }catch (IOException erro){
                         Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
@@ -193,9 +205,17 @@ public class MainActivity extends AppCompatActivity {
 
             case SOLICITA_ATIVACAO:
                 if(resultCode == Activity.RESULT_OK){
-                    Toast.makeText(getApplicationContext(), "O Bluetooth foi ativado!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "O Bluetooth foi ativado!", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(layout, "Bluetooth ligado", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }else{
-                    Toast.makeText(getApplicationContext(), "O Bluetooth não foi ativado, a app será encerrada!", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder adb=new AlertDialog.Builder(MainActivity.this);
+                    adb.setTitle("Definições");
+                    adb.setMessage("O Bluetooth não foi ativado, a app será encerrada!");
+
+                    adb.setPositiveButton("Ok", null);
+                    adb.show();
+                    //Toast.makeText(getApplicationContext(), "O Bluetooth não foi ativado, a app será encerrada!", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 break;
@@ -241,12 +261,21 @@ public class MainActivity extends AppCompatActivity {
                         meuSocket.connect();
 
                         conexao = true;
+                        estado_conexao = 1;
 
                         connectedThread = new ConnectedThread(meuSocket);
                         connectedThread.start();
 
-                        btnConexao.setText("Desconectar '" + MAC + "'");
-                        btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
+                        if(estado_conexao == 1){
+                            btnConexao.setText("Desconectar \n" + "'HC-06: " + MAC + "'");
+                            btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
+                            bt.setBackgroundColor(Color.parseColor("#B62E2E"));
+                            bt.setImageResource(R.drawable.ic_baseline_bluetooth_connected_24);
+                            Snackbar snackbar = Snackbar.make(layout, "HC-06 conectado", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        }
+
+
 
                         //progressDialog.dismiss();
 

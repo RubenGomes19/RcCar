@@ -67,9 +67,15 @@ public class ModosNavegacao extends AppCompatActivity {
             adb.setPositiveButton("Ok", null);
             adb.show();
         }else if(id == R.id.inicio){
-            Intent intent = new Intent(this, MainActivity.class);
+            /*Intent intent = new Intent(this, MainActivity.class);
 
             startActivity(intent);
+
+             */
+
+            Intent it = new Intent(ModosNavegacao.this, MainActivity.class);
+            it.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(it);
         }
 
         return super.onOptionsItemSelected(item);
