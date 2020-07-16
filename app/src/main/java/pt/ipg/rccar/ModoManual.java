@@ -46,6 +46,7 @@ public class ModoManual extends AppCompatActivity {
         buttonEsquerda = (Button) findViewById(R.id.buttonEsquerda);
 
 
+
         buttonX.setOnTouchListener(new View.OnTouchListener() {
 
 
@@ -56,6 +57,8 @@ public class ModoManual extends AppCompatActivity {
 
                         MainActivity.connectedThread.enviar("f");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        buttonX.setBackgroundResource(R.drawable.x_click);
+
 
                     }
                 }
@@ -64,6 +67,8 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("f");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        buttonX.setBackgroundResource(R.drawable.x);
+
 
 
                     }
@@ -83,6 +88,7 @@ public class ModoManual extends AppCompatActivity {
 
                         MainActivity.connectedThread.enviar("t");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        buttonTriangulo.setBackgroundResource(R.drawable.triangulo_click);
 
                     }
                 }
@@ -91,6 +97,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("t");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        buttonTriangulo.setBackgroundResource(R.drawable.triangulo);
 
 
                     }
@@ -110,7 +117,7 @@ public class ModoManual extends AppCompatActivity {
 
                         MainActivity.connectedThread.enviar("p");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
-
+                        buttonQuadrado.setBackgroundResource(R.drawable.quadrado_click);
                     }
                 }
 
@@ -118,7 +125,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("p");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
-
+                        buttonQuadrado.setBackgroundResource(R.drawable.quadrado);
 
                     }
                 }
@@ -137,7 +144,7 @@ public class ModoManual extends AppCompatActivity {
 
                         MainActivity.connectedThread.enviar("s");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
-
+                        buttonBola.setBackgroundResource(R.drawable.bola_click);
                     }
                 }
 
@@ -145,7 +152,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("s");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
-
+                        buttonBola.setBackgroundResource(R.drawable.bola);
 
                     }
                 }
@@ -165,7 +172,7 @@ public class ModoManual extends AppCompatActivity {
 
                         MainActivity.connectedThread.enviar("e");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
-
+                        buttonEsquerda.setBackgroundResource(R.drawable.s_esquerda_click);
                     }
                 }
 
@@ -173,6 +180,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("e");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        buttonEsquerda.setBackgroundResource(R.drawable.s_esquerda);
 
 
                     }
@@ -193,6 +201,7 @@ public class ModoManual extends AppCompatActivity {
 
                         MainActivity.connectedThread.enviar("d");
                         Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        buttonDireita.setBackgroundResource(R.drawable.s_direita_click);
 
                     }
                 }
@@ -201,7 +210,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("d");
                         Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
-
+                        buttonDireita.setBackgroundResource(R.drawable.s_direita);
 
                     }
                 }

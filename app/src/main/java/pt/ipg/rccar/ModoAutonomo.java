@@ -66,14 +66,14 @@ public class ModoAutonomo extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (MainActivity.conexao && colorFlag == 0) {
-                    MainActivity.connectedThread.enviar("l");
+                    MainActivity.connectedThread.enviar("a");
                     Toast.makeText(getApplicationContext(), "Led ligado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.stop);
                     //btnLed2.setText("Desligar Led");
                     //btnLed2.setBackgroundColor(Color.parseColor("#B62E2E"));
                     colorFlag = 1;
                 } else if (MainActivity.conexao && colorFlag == 1) {
-                    MainActivity.connectedThread.enviar("l");
+                    MainActivity.connectedThread.enviar("a");
                     Toast.makeText(getApplicationContext(), "Led desligado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.start);
                     //btnLed2.setText("Ligar Led");

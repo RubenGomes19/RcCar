@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class ModosNavegacao extends AppCompatActivity {
     private int menuAtual = R.menu.menu_modos;
@@ -39,6 +40,7 @@ public class ModosNavegacao extends AppCompatActivity {
         Intent intent = new Intent(this, ModoManual.class);
 
         startActivity(intent);
+
 
     }
 
