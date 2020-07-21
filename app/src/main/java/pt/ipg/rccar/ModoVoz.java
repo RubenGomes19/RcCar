@@ -88,11 +88,11 @@ public class ModoVoz extends AppCompatActivity {
                     String stop = "parar";
 
                     if (texto.equals(start) && MainActivity.conexao && controla == 0) {
-                        MainActivity.connectedThread.enviar("l");
+                        MainActivity.connectedThread.enviar("a");
                         controla = 1;
                         //Toast.makeText(getApplicationContext(), "Sao iguais: " + texto + " = " + start, Toast.LENGTH_LONG).show();
                     }else if(texto.equals(stop) && MainActivity.conexao && controla == 1){
-                        MainActivity.connectedThread.enviar("l");
+                        MainActivity.connectedThread.enviar("b");
                         controla = 0;
 
                     }else if(texto != start && MainActivity.conexao){

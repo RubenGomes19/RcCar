@@ -4,40 +4,54 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
-import android.bluetooth.BluetoothSocket;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.InterruptedIOException;
 
 public class ModoAutonomo extends AppCompatActivity {
     Button btnLed2, buttonPress;
-    TextView textViewTexto;
+    TextView textView4;
     private int colorFlag = 0;
-    //private boolean clicando = true;
+    int estado_botao = 0;
+    private boolean modo_autonomo = false;
+    int count;
+
+
+
+    private Chronometer ch;
 
     //private static final int ID_TEXTO_PARA_VOZ = 100;
 
     private int menuAtual = R.menu.modos;
 
 
+
+    /*public void start() {
+        if (!modo_autonomo){
+            ch.setBase(SystemClock.elapsedRealtime());
+            ch.start();
+            MainActivity.connectedThread.enviar("a");
+            modo_autonomo = true;
+        }
+
+    }
+
+    public void stop(){
+        if (modo_autonomo) {
+            MainActivity.connectedThread.enviar("b");
+            ch.stop();
+            modo_autonomo = false;
+        }
+    }*/
 
     public void atividadeModos(View view) {
 
@@ -47,6 +61,33 @@ public class ModoAutonomo extends AppCompatActivity {
 
     }
 
+
+    Thread t = new Thread(){
+        @Override
+        public void run() {
+            while (!isInterrupted()){
+                if(!modo_autonomo){
+                    return;
+                }
+                try{
+                    Thread.sleep(200);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //count++;
+
+                            //textView4.setText(String.valueOf(count));
+                            MainActivity.connectedThread.enviar("a");
+
+
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,33 +99,64 @@ public class ModoAutonomo extends AppCompatActivity {
 
         btnLed2 = (Button) findViewById(R.id.btnLed2);
         //buttonPress = (Button) findViewById(R.id.buttonPress);
-        //textViewTexto = (TextView) findViewById(R.id.textViewTexto);
+        textView4 = (TextView) findViewById(R.id.textView4);
+
+        ch = (Chronometer) findViewById(R.id.Chronometer);
+
 
 
         btnLed2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
                 if (MainActivity.conexao && colorFlag == 0) {
-                    MainActivity.connectedThread.enviar("a");
-                    Toast.makeText(getApplicationContext(), "Led ligado", Toast.LENGTH_SHORT).show();
+                    modo_autonomo = true;
+
+                    Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.stop);
+                    //modo_autonomo = true;
+
+                    //MainActivity.connectedThread.enviar("a");
+                    //start();
+
+                    t.start();
+                    ch.setBase(SystemClock.elapsedRealtime());
+                    ch.start();
+
+                    colorFlag = 1;
+
                     //btnLed2.setText("Desligar Led");
                     //btnLed2.setBackgroundColor(Color.parseColor("#B62E2E"));
-                    colorFlag = 1;
+
+
+
                 } else if (MainActivity.conexao && colorFlag == 1) {
-                    MainActivity.connectedThread.enviar("a");
-                    Toast.makeText(getApplicationContext(), "Led desligado", Toast.LENGTH_SHORT).show();
+                    //modo_autonomo = false;
+                    //MainActivity.connectedThread.enviar("b");
+                    //Toast.makeText(getApplicationContext(), "Led desligado", Toast.LENGTH_SHORT).show();
+                    //btnLed2.setBackgroundResource(R.drawable.start);
+                    //stop();
+
+                    modo_autonomo = false;
+                    t.interrupt();
+                    Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.start);
+                    MainActivity.connectedThread.enviar("b");
+                    colorFlag = 0;
+                    ch.stop();
+                    recreate();
+
                     //btnLed2.setText("Ligar Led");
                     //btnLed2.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    colorFlag = 0;
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Bluetooth não esta conectado", Toast.LENGTH_LONG).show();
                 }
             }
 
         });
+
 
 
 
@@ -179,6 +251,20 @@ public class ModoAutonomo extends AppCompatActivity {
 
     }
 
+
+    public void enviar(){
+        //colorFlag = 1;
+
+        MainActivity.connectedThread.enviar("a");
+
+
+        /*while (modo_autonomo = true){
+            MainActivity.connectedThread.enviar("a");
+            break;
+
+        }*/
+
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(menuAtual, menu);
