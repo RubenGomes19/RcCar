@@ -18,12 +18,13 @@ import android.widget.Toast;
 import java.io.InterruptedIOException;
 
 public class ModoAutonomo extends AppCompatActivity {
-    Button btnLed2, buttonPress;
-    TextView textView4;
+    Button btnLed2;
+    TextView textView4, textViewEstado;
     private int colorFlag = 0;
     int estado_botao = 0;
     private boolean modo_autonomo = false;
     int count;
+
 
 
 
@@ -100,10 +101,11 @@ public class ModoAutonomo extends AppCompatActivity {
         btnLed2 = (Button) findViewById(R.id.btnLed2);
         //buttonPress = (Button) findViewById(R.id.buttonPress);
         textView4 = (TextView) findViewById(R.id.textView4);
+        textViewEstado = (TextView) findViewById(R.id.textViewEstado1);
 
         ch = (Chronometer) findViewById(R.id.Chronometer);
 
-
+        textViewEstado.setText("Modo autonomo: Desativo");
 
         btnLed2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +117,7 @@ public class ModoAutonomo extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.stop);
+                    textViewEstado.setText("Modo autonomo: Ativo");
                     //modo_autonomo = true;
 
                     //MainActivity.connectedThread.enviar("a");
@@ -142,6 +145,7 @@ public class ModoAutonomo extends AppCompatActivity {
                     t.interrupt();
                     Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.start);
+                    textViewEstado.setText("Modo autonomo: Desativo");
                     MainActivity.connectedThread.enviar("b");
                     colorFlag = 0;
                     ch.stop();

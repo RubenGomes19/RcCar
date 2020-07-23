@@ -21,8 +21,10 @@ import java.util.Locale;
 public class ModoVoz extends AppCompatActivity {
 
     Button buttonVoz;
-    TextView textViewTextoEnviado;
+    TextView textViewTextoEnviado,  textViewTextoEstado;
     private int controla = 0;
+
+    private boolean modo_autonomo = false;
 
     private static final int ID_TEXTO_PARA_VOZ = 100;
 
@@ -37,6 +39,35 @@ public class ModoVoz extends AppCompatActivity {
 
     }
 
+    Thread t = new Thread(){
+        @Override
+        public void run() {
+            while (!isInterrupted()){
+                if(!modo_autonomo){
+                    return;
+                }
+                try{
+                    Thread.sleep(200);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //count++;
+
+                            //textView4.setText(String.valueOf(count));
+                            MainActivity.connectedThread.enviar("a");
+
+
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +78,8 @@ public class ModoVoz extends AppCompatActivity {
 
         buttonVoz = (Button) findViewById(R.id.buttonVoz);
         textViewTextoEnviado = (TextView) findViewById(R.id.textViewTextoEnviado);
+        textViewTextoEstado = (TextView) findViewById(R.id.textViewEstado);
+        textViewTextoEstado.setText("Modo por voz: Desativo");
 
         buttonVoz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,18 +115,27 @@ public class ModoVoz extends AppCompatActivity {
 
                     //Toast.makeText(getApplicationContext(), "Fala: " + texto, Toast.LENGTH_LONG).show();
 
-                    textViewTextoEnviado.setText("Clique no botão e fale \"INICIAR\" para iniciar ou \"PARAR\" para parar. \n\n" + "Fala recolhida: " + texto);
+                    textViewTextoEnviado.setText("Clique no botão e fale \"INICIAR\" para iniciar ou \"PARAR\" para parar. \n\n" + "Fala recolhida: " + "\"" + texto + "\"");
 
                     String start = "iniciar";
                     String stop = "parar";
 
                     if (texto.equals(start) && MainActivity.conexao && controla == 0) {
-                        MainActivity.connectedThread.enviar("a");
+                        //MainActivity.connectedThread.enviar("a");
                         controla = 1;
+                        Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
+                        textViewTextoEstado.setText("Modo por voz: Ativo");
+                        modo_autonomo = true;
+                        t.start();
                         //Toast.makeText(getApplicationContext(), "Sao iguais: " + texto + " = " + start, Toast.LENGTH_LONG).show();
                     }else if(texto.equals(stop) && MainActivity.conexao && controla == 1){
                         MainActivity.connectedThread.enviar("b");
                         controla = 0;
+                        Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
+                        modo_autonomo = false;
+                        textViewTextoEstado.setText("Modo por voz: Desativo");
+                        t.interrupt();
+                        recreate();
 
                     }else if(texto != start && MainActivity.conexao){
                         Toast.makeText(getApplicationContext(), "" + texto + " não tem nenhum comando associado!", Toast.LENGTH_LONG).show();

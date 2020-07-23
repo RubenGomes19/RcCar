@@ -60,6 +60,7 @@ public class ModoManual extends AppCompatActivity {
                         buttonX.setBackgroundResource(R.drawable.x_click);
 
 
+
                     }
                 }
 
