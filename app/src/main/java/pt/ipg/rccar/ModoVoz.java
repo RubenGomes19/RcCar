@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.Menu;
@@ -72,6 +73,7 @@ public class ModoVoz extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_voz);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
@@ -167,13 +169,24 @@ public class ModoVoz extends AppCompatActivity {
             adb.setPositiveButton("Ok", null);
             adb.show();
         }else if(id == R.id.inicio){
-            Intent intent = new Intent(this, MainActivity.class);
+            /*Intent intent = new Intent(this, MainActivity.class);
 
-            startActivity(intent);
+            startActivity(intent);*/
+            if(controla == 1){
+                Toast.makeText(getApplicationContext(), "Desligue o modo por voz primeiro.", Toast.LENGTH_LONG).show();
+            }else {
+                finish();
+            }
         }else if(id == R.id.mudar){
-            Intent intent = new Intent(this, ModosNavegacao.class);
 
-            startActivity(intent);
+            if(controla == 1){
+                Toast.makeText(getApplicationContext(), "Desligue o modo por voz primeiro.", Toast.LENGTH_LONG).show();
+            }else {
+                Intent intent = new Intent(this, ModosNavegacao.class);
+
+                startActivity(intent);
+                finish();
+            }
         }
 
         return super.onOptionsItemSelected(item);

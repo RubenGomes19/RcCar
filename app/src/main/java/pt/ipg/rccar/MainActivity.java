@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,10 +55,12 @@ public class MainActivity extends AppCompatActivity {
     UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     //ISTO É PARA APAGAR! A DE BAIXO E QUE ESTA BEM, E SO TESTE
-    public void atividadeModos(View view) {
+    public void atividadeModo(View view) {
         Intent intent = new Intent(this, ModosNavegacao.class);
 
         startActivity(intent);
+
+        estado_conexao = 1;
         /*Intent it = new Intent(MainActivity.this, ModosNavegacao.class);
         it.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(it);
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void atividadeModo(View view) {
+    public void atividadeModos(View view) {
 
         if(conexao){
             Intent intent = new Intent(this, ModosNavegacao.class);
@@ -81,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
             adb.show();*/
 
 
-            /*Snackbar snackbar = Snackbar.make(layout, "Estabeleça uma conexão primeiro", Snackbar.LENGTH_LONG);
-            snackbar.show();*/
+            Snackbar snackbar = Snackbar.make(layout, "Estabeleça uma conexão primeiro", Snackbar.LENGTH_LONG);
+            snackbar.show();
         }
 
 
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.myToolBar);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
 
         setSupportActionBar(toolbar);
 
@@ -107,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         bt = (ImageView) findViewById(R.id.imageViewBt);
 
 
-
         meuBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
@@ -116,6 +119,13 @@ public class MainActivity extends AppCompatActivity {
         }else if(!meuBluetoothAdapter.isEnabled()) {
             Intent ativaBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(ativaBluetooth, SOLICITA_ATIVACAO);
+        }
+
+
+        if(estado_conexao == 1){
+            btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
+            bt.setBackgroundColor(Color.parseColor("#B62E2E"));
+            bt.setImageResource(R.drawable.ic_baseline_bluetooth_connected_24);
         }
 
         btnConexao.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
                             //Toast.makeText(getApplicationContext(), "Bluetooh desconectado", Toast.LENGTH_LONG).show();
                             bt.setBackgroundColor(Color.parseColor("#ED3F60B5"));
                             bt.setImageResource(R.drawable.ic_baseline_bluetooth_24);
+
+                            MainActivity.connectedThread.enviar("s");
+
                             Snackbar snackbar = Snackbar.make(layout, "HC-06 desconectado", Snackbar.LENGTH_LONG);
                             snackbar.show();
                         }

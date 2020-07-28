@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
@@ -94,6 +95,7 @@ public class ModoAutonomo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_autonomo);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
@@ -287,13 +289,26 @@ public class ModoAutonomo extends AppCompatActivity {
             adb.setPositiveButton("Ok", null);
             adb.show();
         }else if(id == R.id.inicio){
-            Intent intent = new Intent(this, MainActivity.class);
+            /*Intent intent = new Intent(this, MainActivity.class);
 
-            startActivity(intent);
+            startActivity(intent);*/
+
+            if(colorFlag == 1){
+                Toast.makeText(getApplicationContext(), "Desligue o modo autonomo primeiro.", Toast.LENGTH_LONG).show();
+            }else {
+                finish();
+            }
+
+
         }else if(id == R.id.mudar){
-            Intent intent = new Intent(this, ModosNavegacao.class);
+            if(colorFlag == 1){
+                Toast.makeText(getApplicationContext(), "Desligue o modo autonomo primeiro.", Toast.LENGTH_LONG).show();
+            }else {
+                Intent intent = new Intent(this, ModosNavegacao.class);
 
-            startActivity(intent);
+                startActivity(intent);
+                finish();
+            }
         }
 
         return super.onOptionsItemSelected(item);

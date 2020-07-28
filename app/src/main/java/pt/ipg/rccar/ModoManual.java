@@ -262,13 +262,16 @@ public class ModoManual extends AppCompatActivity {
             adb.setPositiveButton("Ok", null);
             adb.show();
         }else if(id == R.id.inicio){
-            Intent intent = new Intent(this, MainActivity.class);
 
-            startActivity(intent);
+            /*Intent intent = new Intent(this, MainActivity.class);
+
+            startActivity(intent);*/
+            finish();
         }else if(id == R.id.mudar){
             Intent intent = new Intent(this, ModosNavegacao.class);
 
             startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
