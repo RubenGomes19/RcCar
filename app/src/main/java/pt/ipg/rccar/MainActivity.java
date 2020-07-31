@@ -1,5 +1,6 @@
 package pt.ipg.rccar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -12,6 +13,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+import java.util.concurrent.Delayed;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +42,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int SOLICITA_ATIVACAO = 1;
     private static final int SOLICITA_CONEXAO = 2;
+    public static final int MESSAGE_READ = 3;
 
     static ConnectedThread connectedThread;
+
+    static Handler mhandler;
+
+    static int mensagem = 0;
+
+    StringBuilder dadosBluetooth = new StringBuilder();
+
 
     BluetoothAdapter meuBluetoothAdapter = null;
     BluetoothDevice meuDevice = null;
@@ -47,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
     static boolean conexao = false;
     private static String MAC = null;
 
+    static String recebidos;
+
     private int menuAtual = R.menu.menu;
 
     int estado_conexao = 0;
 
 
-    UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    UUID MEU_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //UUID- Universally unique identifier
 
     //ISTO É PARA APAGAR! A DE BAIXO E QUE ESTA BEM, E SO TESTE
     public void atividadeModo(View view) {
@@ -132,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+
                 if(conexao){
                     //desconectar
                     try {
@@ -162,10 +179,104 @@ public class MainActivity extends AppCompatActivity {
                     Intent abreLista = new Intent(MainActivity.this, ListaDispositivos.class);
                     startActivityForResult(abreLista, SOLICITA_CONEXAO);
 
+
                 }
             }
         });
 
+
+        mhandler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                if(msg.what == MESSAGE_READ){
+                    recebidos = (String) msg.obj;
+
+                    //dadosBluetooth.append(recebidos);
+
+                    /*int fimInformacao = dadosBluetooth.indexOf("}");
+
+                    if(fimInformacao > 0){
+
+                        String dadosCompletos = dadosBluetooth.substring(0, fimInformacao);
+
+                        int tamInformacao = dadosCompletos.length();
+
+                        if(dadosBluetooth.charAt(0) == '{') {
+                            //{Sostaculoobstaculo}
+
+                            String dadosFinais = dadosBluetooth.substring(1, tamInformacao);
+
+                            Log.d("Recebidos", dadosFinais);
+
+                            if (dadosFinais.contains("obstaculo")) {
+                                Toast.makeText(getApplicationContext(), "Obstaculo", Toast.LENGTH_LONG).show();
+                                mensagem = 1;
+
+                            }
+
+                            if (dadosFinais.contains("Sobstaculo")) {
+                                Toast.makeText(getApplicationContext(), "Livre", Toast.LENGTH_LONG).show();
+                                mensagem = 0;
+
+                            }
+
+                            if (dadosFinais.contains("ativo")) {
+                                Toast.makeText(getApplicationContext(), "Modo autonomo ativc TESTE", Toast.LENGTH_LONG).show();
+                                mensagem = 2;
+
+                            }
+
+
+                        }
+                        dadosBluetooth.delete(0,dadosBluetooth.length());
+
+
+                    }*/
+
+
+
+                    if(recebidos.contains("obstaculo")){
+                        //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
+                        mensagem = 1;
+
+                    }
+                    if(recebidos.contains("Sobstaculo")){
+                        //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
+                        mensagem = 0;
+
+                    }
+
+                    //recebidos = "";
+                    //mensagem = 0;
+
+
+
+
+
+
+                    /*if(recebidos.contains("Sobstaculo")){
+                        //Toast.makeText(getApplicationContext(), "Obstaculo" , Toast.LENGTH_LONG).show();
+                        mensagem = 0;
+
+                    }
+                    if(recebidos.contains("obstaculo")){
+                        Toast.makeText(getApplicationContext(), "Obstaculo" , Toast.LENGTH_LONG).show();
+                        mensagem = 1;
+
+                        Log.d("Recebidos", recebidos);
+                    }*/
+                    //mensagem = 0;
+
+
+
+
+
+                }
+
+            }
+
+
+        };
 
 
         /*btnLed1.setOnClickListener(new View.OnClickListener() {
@@ -236,6 +347,8 @@ public class MainActivity extends AppCompatActivity {
             case SOLICITA_CONEXAO:
                 if(resultCode == Activity.RESULT_OK){
 
+
+
                     MAC = data.getExtras().getString(ListaDispositivos.ENDERECO_MAC);
 
                     //Toast.makeText(getApplicationContext(), "MAC FINAL: " + MAC, Toast.LENGTH_LONG).show();
@@ -269,6 +382,7 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
 
+
                         meuSocket = meuDevice.createRfcommSocketToServiceRecord(MEU_UUID);
 
                         meuSocket.connect();
@@ -288,6 +402,7 @@ public class MainActivity extends AppCompatActivity {
                             snackbar.show();
                         }
 
+                        //connectedThread.enviar("T");
 
 
                         //progressDialog.dismiss();
@@ -338,20 +453,28 @@ public class MainActivity extends AppCompatActivity {
 
             // Keep listening to the InputStream until an exception occurs.
 
-            /*while (true) {
+            while (true) {
                 try {
                     // Read from the InputStream.
                     numBytes = mmInStream.read(mmBuffer);
+
+                    String dadosBt = new String(mmBuffer, 0, numBytes);
+
+
                     // Send the obtained bytes to the UI activity.
-                    Message readMsg = handler.obtainMessage(
+                    /*Message readMsg = handler.obtainMessage(
                             MessageConstants.MESSAGE_READ, numBytes, -1,
                             mmBuffer);
-                    readMsg.sendToTarget();
+                    readMsg.sendToTarget();*/
+
+                    mhandler.obtainMessage(MESSAGE_READ, numBytes, -1, dadosBt).sendToTarget();
+
+
                 } catch (IOException e) {
-                    Log.d(TAG, "Input stream was disconnected", e);
+                    //Log.d(TAG, "Input stream was disconnected", e);
                     break;
                 }
-            }*/
+            }
 
         }
 

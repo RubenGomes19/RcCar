@@ -1,5 +1,6 @@
 package pt.ipg.rccar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -8,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -219,6 +222,22 @@ public class ModoManual extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        /*MainActivity.mhandler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                if(msg.what == MainActivity.MESSAGE_READ){
+                    String recebidos = (String) msg.obj;
+
+
+
+                }
+
+            }
+
+
+        };*/
 
         /*
         //GUARDAR PROGRESS BAR

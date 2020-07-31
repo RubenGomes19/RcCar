@@ -64,6 +64,7 @@ public class ListaDispositivos extends ListActivity {
         setResult(RESULT_OK, retornaMac);
 
 
+
         finish();
 
 

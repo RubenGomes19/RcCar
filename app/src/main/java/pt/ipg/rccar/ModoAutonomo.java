@@ -1,5 +1,6 @@
 package pt.ipg.rccar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -7,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +23,13 @@ import java.io.InterruptedIOException;
 
 public class ModoAutonomo extends AppCompatActivity {
     Button btnLed2;
-    TextView textView4, textViewEstado;
+    TextView textView4, textViewEstado, textViewObstaculo;
     private int colorFlag = 0;
     int estado_botao = 0;
     private boolean modo_autonomo = false;
     int count;
+
+    Handler mhandler;
 
 
 
@@ -67,12 +72,13 @@ public class ModoAutonomo extends AppCompatActivity {
     Thread t = new Thread(){
         @Override
         public void run() {
+
             while (!isInterrupted()){
                 if(!modo_autonomo){
                     return;
                 }
                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -81,8 +87,18 @@ public class ModoAutonomo extends AppCompatActivity {
                             //textView4.setText(String.valueOf(count));
                             MainActivity.connectedThread.enviar("a");
 
+                            if(MainActivity.mensagem == 1){
+                                textViewObstaculo.setText("Obstaculo a menos de 50cm, efetuando manobra");
+
+                            }else{
+                                textViewObstaculo.setText("Livre");
+
+
+                            }
 
                         }
+
+
                     });
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -104,10 +120,19 @@ public class ModoAutonomo extends AppCompatActivity {
         //buttonPress = (Button) findViewById(R.id.buttonPress);
         textView4 = (TextView) findViewById(R.id.textView4);
         textViewEstado = (TextView) findViewById(R.id.textViewEstado1);
+        textViewObstaculo = (TextView) findViewById(R.id.textViewObstaculo);
 
         ch = (Chronometer) findViewById(R.id.Chronometer);
 
         textViewEstado.setText("Modo autonomo: Desativo");
+        textViewObstaculo.setText("");
+
+        /*if(MainActivity.mensagem == 1){
+            textViewObstaculo.setText("Obstaculo a menos de 50cm, efetuando manobra");
+        }*/
+
+
+
 
         btnLed2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +141,8 @@ public class ModoAutonomo extends AppCompatActivity {
 
                 if (MainActivity.conexao && colorFlag == 0) {
                     modo_autonomo = true;
+
+                    //textViewObstaculo.setText("");
 
                     Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.stop);
@@ -131,6 +158,7 @@ public class ModoAutonomo extends AppCompatActivity {
 
                     colorFlag = 1;
 
+
                     //btnLed2.setText("Desligar Led");
                     //btnLed2.setBackgroundColor(Color.parseColor("#B62E2E"));
 
@@ -142,6 +170,8 @@ public class ModoAutonomo extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), "Led desligado", Toast.LENGTH_SHORT).show();
                     //btnLed2.setBackgroundResource(R.drawable.start);
                     //stop();
+
+                    //textViewObstaculo.setText("");
 
                     modo_autonomo = false;
                     t.interrupt();
@@ -162,6 +192,7 @@ public class ModoAutonomo extends AppCompatActivity {
             }
 
         });
+
 
 
 
