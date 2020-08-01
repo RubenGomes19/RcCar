@@ -144,7 +144,7 @@ public class ModoAutonomo extends AppCompatActivity {
 
                     //textViewObstaculo.setText("");
 
-                    Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.stop);
                     textViewEstado.setText("Modo autonomo: Ativo");
                     //modo_autonomo = true;
@@ -177,7 +177,7 @@ public class ModoAutonomo extends AppCompatActivity {
                     t.interrupt();
                     Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.start);
-                    textViewEstado.setText("Modo autonomo: Desativo");
+                    //textViewEstado.setText("Modo autonomo: Desativo");
                     MainActivity.connectedThread.enviar("b");
                     colorFlag = 0;
                     ch.stop();

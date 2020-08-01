@@ -393,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
                         connectedThread = new ConnectedThread(meuSocket);
                         connectedThread.start();
 
-                        if(estado_conexao == 1){
+                        if(estado_conexao == 1 ){
                             btnConexao.setText("Desconectar \n" + "'HC-06: " + MAC + "'");
                             btnConexao.setBackgroundColor(Color.parseColor("#B62E2E"));
                             bt.setBackgroundColor(Color.parseColor("#B62E2E"));

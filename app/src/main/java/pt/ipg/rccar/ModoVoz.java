@@ -22,7 +22,7 @@ import java.util.Locale;
 public class ModoVoz extends AppCompatActivity {
 
     Button buttonVoz;
-    TextView textViewTextoEnviado,  textViewTextoEstado;
+    TextView textViewTextoEnviado,  textViewTextoEstado, textViewObstaculoVoz;
     private int controla = 0;
 
     private boolean modo_autonomo = false;
@@ -48,7 +48,7 @@ public class ModoVoz extends AppCompatActivity {
                     return;
                 }
                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -56,6 +56,15 @@ public class ModoVoz extends AppCompatActivity {
 
                             //textView4.setText(String.valueOf(count));
                             MainActivity.connectedThread.enviar("a");
+
+                            if(MainActivity.mensagem == 1){
+                                textViewObstaculoVoz.setText("Obstaculo a menos de 50cm, efetuando manobra");
+
+                            }else{
+                                textViewObstaculoVoz.setText("Livre");
+
+
+                            }
 
 
                         }
@@ -82,6 +91,8 @@ public class ModoVoz extends AppCompatActivity {
         textViewTextoEnviado = (TextView) findViewById(R.id.textViewTextoEnviado);
         textViewTextoEstado = (TextView) findViewById(R.id.textViewEstado);
         textViewTextoEstado.setText("Modo por voz: Desativo");
+        textViewObstaculoVoz = (TextView) findViewById(R.id.textViewObstaculoVoz);
+
 
         buttonVoz.setOnClickListener(new View.OnClickListener() {
             @Override
