@@ -305,6 +305,7 @@ public class ModoManual extends AppCompatActivity {
             /*Intent intent = new Intent(this, MainActivity.class);
 
             startActivity(intent);*/
+
             finish();
         }else if(id == R.id.mudar){
             Intent intent = new Intent(this, ModosNavegacao.class);

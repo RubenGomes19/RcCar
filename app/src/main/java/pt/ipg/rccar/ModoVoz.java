@@ -2,6 +2,7 @@ package pt.ipg.rccar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -16,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -23,6 +26,7 @@ public class ModoVoz extends AppCompatActivity {
 
     Button buttonVoz;
     TextView textViewTextoEnviado,  textViewTextoEstado, textViewObstaculoVoz;
+    ConstraintLayout layout;
     private int controla = 0;
 
     private boolean modo_autonomo = false;
@@ -93,6 +97,8 @@ public class ModoVoz extends AppCompatActivity {
         textViewTextoEstado.setText("Modo por voz: Desativo");
         textViewObstaculoVoz = (TextView) findViewById(R.id.textViewObstaculoVoz);
 
+        layout = (ConstraintLayout) findViewById(R.id.main);
+
 
         buttonVoz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +114,9 @@ public class ModoVoz extends AppCompatActivity {
                 try{
                     startActivityForResult(iVoz, ID_TEXTO_PARA_VOZ);
                 }catch (ActivityNotFoundException a){
-                    Toast.makeText(getApplicationContext(), "Este Dispositivo não suporta comando por voz!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Este Dispositivo não suporta comando por voz!", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(layout, "Este Dispositivo não suporta comando por voz!", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             }
         });
@@ -136,7 +144,11 @@ public class ModoVoz extends AppCompatActivity {
                     if (texto.equals(start) && MainActivity.conexao && controla == 0) {
                         //MainActivity.connectedThread.enviar("a");
                         controla = 1;
-                        Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
+
+                        Snackbar snackbar = Snackbar.make(layout, "Modo por voz ativo", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
                         textViewTextoEstado.setText("Modo por voz: Ativo");
                         modo_autonomo = true;
                         t.start();
@@ -144,17 +156,27 @@ public class ModoVoz extends AppCompatActivity {
                     }else if(texto.equals(stop) && MainActivity.conexao && controla == 1){
                         MainActivity.connectedThread.enviar("b");
                         controla = 0;
-                        Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
+
+                        Snackbar snackbar = Snackbar.make(layout, "Modo por voz desativo", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
                         modo_autonomo = false;
                         textViewTextoEstado.setText("Modo por voz: Desativo");
                         t.interrupt();
                         recreate();
 
                     }else if(texto != start && MainActivity.conexao){
-                        Toast.makeText(getApplicationContext(), "" + texto + " não tem nenhum comando associado!", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "" + texto + " não tem nenhum comando associado!", Toast.LENGTH_LONG).show();
+
+                        Snackbar snackbar = Snackbar.make(layout, "\"" + texto + "\"" + " não tem nenhum comando associado!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), "Não está conectado" , Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Não está conectado" , Toast.LENGTH_LONG).show();
+                        Snackbar snackbar = Snackbar.make(layout, "Não está conectado", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
                     }
 
                 }
@@ -184,14 +206,19 @@ public class ModoVoz extends AppCompatActivity {
 
             startActivity(intent);*/
             if(controla == 1){
-                Toast.makeText(getApplicationContext(), "Desligue o modo por voz primeiro.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Desligue o modo por voz primeiro.", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(layout, "Desligue o modo autonomo primeiro.", Snackbar.LENGTH_LONG);
+                snackbar.show();
+
             }else {
                 finish();
             }
         }else if(id == R.id.mudar){
 
             if(controla == 1){
-                Toast.makeText(getApplicationContext(), "Desligue o modo por voz primeiro.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Desligue o modo por voz primeiro.", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(layout, "Desligue o modo autonomo primeiro.", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }else {
                 Intent intent = new Intent(this, ModosNavegacao.class);
 

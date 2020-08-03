@@ -170,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     }catch (IOException erro){
-                        Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Ocorreu um erro: " + erro, Toast.LENGTH_LONG).show();
+                        Snackbar snackbar = Snackbar.make(layout, "Ocorreu um erro.", Snackbar.LENGTH_LONG);
+                        snackbar.show();
 
                     }
 
@@ -245,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                         mensagem = 0;
 
                     }
+
 
                     //recebidos = "";
                     //mensagem = 0;
@@ -418,7 +421,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }else{
-                    Toast.makeText(getApplicationContext(), "Falha ao obter o MAC", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Falha ao obter o MAC", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar.make(layout, "Falha ao obter o MAC.", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+
                 }
         }
 

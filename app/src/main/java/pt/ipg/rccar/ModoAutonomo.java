@@ -3,6 +3,7 @@ package pt.ipg.rccar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -19,11 +20,14 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.InterruptedIOException;
 
 public class ModoAutonomo extends AppCompatActivity {
     Button btnLed2;
     TextView textView4, textViewEstado, textViewObstaculo;
+    ConstraintLayout layout;
     private int colorFlag = 0;
     int estado_botao = 0;
     private boolean modo_autonomo = false;
@@ -122,6 +126,8 @@ public class ModoAutonomo extends AppCompatActivity {
         textViewEstado = (TextView) findViewById(R.id.textViewEstado1);
         textViewObstaculo = (TextView) findViewById(R.id.textViewObstaculo);
 
+        layout = (ConstraintLayout) findViewById(R.id.main);
+
         ch = (Chronometer) findViewById(R.id.Chronometer);
 
         textViewEstado.setText("Modo autonomo: Desativo");
@@ -143,6 +149,9 @@ public class ModoAutonomo extends AppCompatActivity {
                     modo_autonomo = true;
 
                     //textViewObstaculo.setText("");
+
+                    Snackbar snackbar = Snackbar.make(layout, "Modo autonomo ativado", Snackbar.LENGTH_LONG);
+                    snackbar.show();
 
                     //Toast.makeText(getApplicationContext(), "Modo autonomo ativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.stop);
@@ -172,10 +181,12 @@ public class ModoAutonomo extends AppCompatActivity {
                     //stop();
 
                     //textViewObstaculo.setText("");
+                    Snackbar snackbar = Snackbar.make(layout, "Modo autonomo desativo", Snackbar.LENGTH_LONG);
+                    snackbar.show();
 
                     modo_autonomo = false;
                     t.interrupt();
-                    Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Modo autonomo desativado", Toast.LENGTH_SHORT).show();
                     btnLed2.setBackgroundResource(R.drawable.start);
                     //textViewEstado.setText("Modo autonomo: Desativo");
                     MainActivity.connectedThread.enviar("b");
@@ -325,7 +336,9 @@ public class ModoAutonomo extends AppCompatActivity {
             startActivity(intent);*/
 
             if(colorFlag == 1){
-                Toast.makeText(getApplicationContext(), "Desligue o modo autonomo primeiro.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Desligue o modo autonomo primeiro.", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(layout, "Desligue o modo autonomo primeiro.", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }else {
                 finish();
             }
@@ -333,7 +346,9 @@ public class ModoAutonomo extends AppCompatActivity {
 
         }else if(id == R.id.mudar){
             if(colorFlag == 1){
-                Toast.makeText(getApplicationContext(), "Desligue o modo autonomo primeiro.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Desligue o modo autonomo primeiro.", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(layout, "Desligue o modo autonomo primeiro.", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }else {
                 Intent intent = new Intent(this, ModosNavegacao.class);
 
