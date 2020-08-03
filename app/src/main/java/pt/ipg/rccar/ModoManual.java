@@ -16,10 +16,14 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class ModoManual extends AppCompatActivity {
     Button buttonX, buttonBola, buttonQuadrado, buttonTriangulo, buttonEsquerda, buttonDireita;
+    TextView textViewObstaculo;
 
     private int menuAtual = R.menu.modos;
 
@@ -48,6 +52,12 @@ public class ModoManual extends AppCompatActivity {
         buttonDireita = (Button) findViewById(R.id.buttonDireita);
         buttonEsquerda = (Button) findViewById(R.id.buttonEsquerda);
 
+        textViewObstaculo = (TextView) findViewById(R.id.textViewObstaculoManual);
+
+
+        if(MainActivity.mensagem != 1) {
+            textViewObstaculo.setText("Livre");
+        }
 
 
         buttonX.setOnTouchListener(new View.OnTouchListener() {
@@ -59,9 +69,18 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao){
 
                         MainActivity.connectedThread.enviar("f");
-                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonX.setBackgroundResource(R.drawable.x_click);
 
+
+                        if(MainActivity.mensagem == 1){
+                            textViewObstaculo.setText("Obstaculo a menos de 50cm, efetue manobra");
+
+                        }else{
+                            textViewObstaculo.setText("Livre");
+
+
+                        }
 
 
                     }
@@ -70,8 +89,9 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("f");
-                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
                         buttonX.setBackgroundResource(R.drawable.x);
+                        //textViewObstaculo.setText("");
 
 
 
@@ -91,7 +111,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao){
 
                         MainActivity.connectedThread.enviar("t");
-                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonTriangulo.setBackgroundResource(R.drawable.triangulo_click);
 
                     }
@@ -100,7 +120,7 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("t");
-                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
                         buttonTriangulo.setBackgroundResource(R.drawable.triangulo);
 
 
@@ -120,7 +140,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao){
 
                         MainActivity.connectedThread.enviar("p");
-                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonQuadrado.setBackgroundResource(R.drawable.quadrado_click);
                     }
                 }
@@ -128,7 +148,7 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("p");
-                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
                         buttonQuadrado.setBackgroundResource(R.drawable.quadrado);
 
                     }
@@ -147,7 +167,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao){
 
                         MainActivity.connectedThread.enviar("s");
-                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonBola.setBackgroundResource(R.drawable.bola_click);
                     }
                 }
@@ -155,7 +175,7 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("s");
-                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
                         buttonBola.setBackgroundResource(R.drawable.bola);
 
                     }
@@ -175,7 +195,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao){
 
                         MainActivity.connectedThread.enviar("e");
-                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonEsquerda.setBackgroundResource(R.drawable.s_esquerda_click);
                     }
                 }
@@ -183,7 +203,7 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("e");
-                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
                         buttonEsquerda.setBackgroundResource(R.drawable.s_esquerda);
 
 
@@ -204,7 +224,7 @@ public class ModoManual extends AppCompatActivity {
                     if(MainActivity.conexao){
 
                         MainActivity.connectedThread.enviar("d");
-                        Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonDireita.setBackgroundResource(R.drawable.s_direita_click);
 
                     }
@@ -213,7 +233,7 @@ public class ModoManual extends AppCompatActivity {
                 if(event.getAction() == MotionEvent.ACTION_UP){
                     if(MainActivity.conexao ){
                         MainActivity.connectedThread.enviar("d");
-                        Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Nao pressionado", Toast.LENGTH_SHORT).show();
                         buttonDireita.setBackgroundResource(R.drawable.s_direita);
 
                     }
