@@ -73,10 +73,14 @@ public class ModoManual extends AppCompatActivity {
                         buttonX.setBackgroundResource(R.drawable.x_click);
 
 
-                        if(MainActivity.mensagem == 1){
-                            textViewObstaculo.setText("Obstaculo a menos de 50cm, efetue manobra");
 
-                        }else{
+                        if(MainActivity.mensagem == 1){
+                            textViewObstaculo.setText("Obstaculo a menos de 50cm, efetuando manobra");
+
+                        }else if(MainActivity.mensagem == 2){
+                            textViewObstaculo.setText("Pedido de ajuda!");
+                        }
+                        else{
                             textViewObstaculo.setText("Livre");
 
 
@@ -113,6 +117,19 @@ public class ModoManual extends AppCompatActivity {
                         MainActivity.connectedThread.enviar("t");
                         //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonTriangulo.setBackgroundResource(R.drawable.triangulo_click);
+
+                        if(MainActivity.mensagem == 1){
+                            textViewObstaculo.setText("Obstaculo a menos de 50cm, efetuando manobra");
+
+                        }else if(MainActivity.mensagem == 2){
+                            textViewObstaculo.setText("Pedido de ajuda!");
+                        }
+                        else{
+                            textViewObstaculo.setText("Livre");
+
+
+                        }
+
 
                     }
                 }
@@ -197,6 +214,15 @@ public class ModoManual extends AppCompatActivity {
                         MainActivity.connectedThread.enviar("e");
                         //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonEsquerda.setBackgroundResource(R.drawable.s_esquerda_click);
+
+                        if(MainActivity.mensagem == 2){
+                            textViewObstaculo.setText("Pedido de ajuda!");
+                        }
+                        else{
+                            textViewObstaculo.setText("Livre");
+
+
+                        }
                     }
                 }
 
@@ -226,6 +252,15 @@ public class ModoManual extends AppCompatActivity {
                         MainActivity.connectedThread.enviar("d");
                         //Toast.makeText(getApplicationContext(), "Pressionado", Toast.LENGTH_SHORT).show();
                         buttonDireita.setBackgroundResource(R.drawable.s_direita_click);
+
+                        if(MainActivity.mensagem == 2){
+                            textViewObstaculo.setText("Pedido de ajuda!");
+                        }
+                        else{
+                            textViewObstaculo.setText("Livre");
+
+
+                        }
 
                     }
                 }

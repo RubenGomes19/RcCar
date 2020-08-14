@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     }
 
 
@@ -181,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent abreLista = new Intent(MainActivity.this, ListaDispositivos.class);
                     startActivityForResult(abreLista, SOLICITA_CONEXAO);
 
-
                 }
+
             }
         });
 
@@ -247,6 +250,13 @@ public class MainActivity extends AppCompatActivity {
                         mensagem = 0;
 
                     }
+                    if(recebidos.contains("detetado")){
+                        //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
+                        mensagem = 2;
+
+                    }
+
+
 
 
                     //recebidos = "";
@@ -359,8 +369,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    /*
-                    final ProgressDialog progressDialog = new ProgressDialog(this);
+
+                        /*ProgressDialog progressDialog = new ProgressDialog(this);
                         progressDialog.setTitle("A Conectar...");
                         progressDialog.setMessage("Aguarde por favor...");
                         progressDialog.setCancelable(false);
@@ -378,10 +388,10 @@ public class MainActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                             }
                         }).start();
-                        progressDialog.show();
+                        progressDialog.show();*/
 
 
-                     */
+
 
                     try {
 
@@ -408,7 +418,6 @@ public class MainActivity extends AppCompatActivity {
                         //connectedThread.enviar("T");
 
 
-                        //progressDialog.dismiss();
 
                         //Toast.makeText(getApplicationContext(), "Conectado com: " + MAC , Toast.LENGTH_LONG).show();
                     }catch (IOException erro){

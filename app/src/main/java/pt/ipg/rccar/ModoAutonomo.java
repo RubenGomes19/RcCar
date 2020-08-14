@@ -73,6 +73,8 @@ public class ModoAutonomo extends AppCompatActivity {
     }
 
 
+
+
     Thread t = new Thread(){
         @Override
         public void run() {
@@ -94,7 +96,10 @@ public class ModoAutonomo extends AppCompatActivity {
                             if(MainActivity.mensagem == 1){
                                 textViewObstaculo.setText("Obstaculo a menos de 50cm, efetuando manobra");
 
-                            }else{
+                            }else if(MainActivity.mensagem == 2){
+                                textViewObstaculo.setText("Pedido de ajuda!");
+                            }
+                            else{
                                 textViewObstaculo.setText("Livre");
 
 
