@@ -64,7 +64,10 @@ public class ModoVoz extends AppCompatActivity {
                             if(MainActivity.mensagem == 1){
                                 textViewObstaculoVoz.setText("Obstaculo a menos de 50cm, efetuando manobra");
 
-                            }else{
+                            }else if(MainActivity.mensagem == 2){
+                                textViewObstaculoVoz.setText("Pedido de ajuda!");
+                            }
+                            else{
                                 textViewObstaculoVoz.setText("Livre");
 
 
