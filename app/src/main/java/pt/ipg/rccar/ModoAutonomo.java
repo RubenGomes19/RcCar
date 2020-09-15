@@ -84,7 +84,7 @@ public class ModoAutonomo extends AppCompatActivity {
                     return;
                 }
                 try{
-                    Thread.sleep(500);
+                    Thread.sleep(1500);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -92,6 +92,7 @@ public class ModoAutonomo extends AppCompatActivity {
 
                             //textView4.setText(String.valueOf(count));
                             MainActivity.connectedThread.enviar("a");
+
 
                             if(MainActivity.mensagem == 1){
                                 textViewObstaculo.setText("Obstaculo a menos de 50cm, efetuando manobra");
@@ -104,6 +105,8 @@ public class ModoAutonomo extends AppCompatActivity {
 
 
                             }
+
+                            //textViewObstaculo.setText("Livre");
 
                         }
 

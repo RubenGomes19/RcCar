@@ -240,17 +240,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    if(recebidos.contains("obstaculo")){
-                        //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
-                        mensagem = 1;
-
-                    }
-                    if(recebidos.contains("Sobstaculo")){
+                    if(recebidos.contains("0")){
                         //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
                         mensagem = 0;
 
                     }
-                    if(recebidos.contains("detetado")){
+                    if(recebidos.contains("1")){
+                        //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
+                        mensagem = 1;
+
+                    }
+                    if(recebidos.contains("2")){
                         //Toast.makeText(getApplicationContext(), "Recebido:" + recebidos , Toast.LENGTH_LONG).show();
                         mensagem = 2;
 
